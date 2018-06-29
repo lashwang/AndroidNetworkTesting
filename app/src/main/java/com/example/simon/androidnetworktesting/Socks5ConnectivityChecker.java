@@ -12,9 +12,10 @@ import java.net.PasswordAuthentication;
 import java.net.Proxy;
 import java.net.Socket;
 
-import socks5lib.client.Socks5;
-import socks5lib.client.SocksProxy;
-import socks5lib.client.SocksSocket;
+
+import sockslib.client.Socks5;
+import sockslib.client.SocksProxy;
+import sockslib.client.SocksSocket;
 
 import static socks5lib.utils.ResourceUtil.close;
 
@@ -39,7 +40,8 @@ public class Socks5ConnectivityChecker {
         try {
             SocksProxy proxy = new Socks5(
                     new InetSocketAddress(proxyHost, proxyPort), user, password);
-            socket = new SocksSocket(proxy, new InetSocketAddress(url, 80));
+            InetSocketAddress address = new InetSocketAddress("seven-china.com", 80);
+            socket = new SocksSocket(proxy, address);
             inputStream = socket.getInputStream();
             outputStream = socket.getOutputStream();
             while ((length = inputStream.read(buffer)) > 0) {
