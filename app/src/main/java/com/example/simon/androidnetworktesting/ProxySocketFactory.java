@@ -63,7 +63,7 @@ public class ProxySocketFactory extends SocketFactory {
     @Override
     public Socket createSocket() throws IOException {
         mLog.debug("createSocket#5");
-        Socket socket = new SocksSocket(proxy, new InetSocketAddress(host,80));
+        Socket socket = new SocksSocket(proxy);
         return socket;
     }
 }
