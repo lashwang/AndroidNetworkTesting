@@ -20,16 +20,16 @@ public class ProxySocketFactory extends SocketFactory {
     private static final Logger mLog = Logger.getLogger(SocketFactory.class);
 
 
-    public ProxySocketFactory(String proxyHost,int proxyPort,String user,String password,String host){
+    public ProxySocketFactory(String proxyHost,int proxyPort,String user,String password){
         mLog.debug("ProxySocketFactory");
-        if(user != null){
-            proxy = new Socks5(
-                    new InetSocketAddress(proxyHost, proxyPort), user, password);
-        }else{
-            proxy = new Socks5(
-                    new InetSocketAddress(proxyHost, proxyPort));
-        }
-        this.host = host;
+        proxy = new Socks5(
+                new InetSocketAddress(proxyHost, proxyPort), user, password);
+    }
+
+    public ProxySocketFactory(String proxyHost,int proxyPort){
+        mLog.debug("ProxySocketFactory with no auth");
+        proxy = new Socks5(
+                new InetSocketAddress(proxyHost, proxyPort));
     }
 
     @Override

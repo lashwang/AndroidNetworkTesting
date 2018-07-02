@@ -41,7 +41,6 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     api 'com.amitshekhar.android:android-networking:1.0.1'
     api 'com.squareup.okhttp3:okhttp:3.10.0'
-    api 'com.google.guava:guava:25.1-android'
 
 
 }

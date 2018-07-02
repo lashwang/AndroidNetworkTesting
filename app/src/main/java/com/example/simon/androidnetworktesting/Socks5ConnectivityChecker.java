@@ -40,7 +40,7 @@ public class Socks5ConnectivityChecker {
         URL netUrl = new URL(url);
 
         OkHttpClient client = new OkHttpClient.Builder()
-                .socketFactory(new ProxySocketFactory(proxyHost,proxyPort,user,password,netUrl.getHost()))
+                .socketFactory(new ProxySocketFactory(proxyHost,proxyPort,user,password))
                 .connectTimeout(5, TimeUnit.SECONDS)
                 .build();
         Request request = new Request.Builder()
