@@ -172,7 +172,7 @@ public class Socks5 implements SocksProxy{
 		}
 		if(proxySocket == null){
 			proxySocket = new Socket(inetAddress, port);
-		}else{
+		}else if(!proxySocket.isConnected()){
 			proxySocket.connect(new InetSocketAddress(inetAddress, port));
 		}
 

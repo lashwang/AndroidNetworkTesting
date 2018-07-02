@@ -21,6 +21,7 @@ public class ProxySocketFactory extends SocketFactory {
 
 
     public ProxySocketFactory(String proxyHost,int proxyPort,String user,String password,String host){
+        mLog.debug("ProxySocketFactory");
         if(user != null){
             proxy = new Socks5(
                     new InetSocketAddress(proxyHost, proxyPort), user, password);
@@ -33,31 +34,35 @@ public class ProxySocketFactory extends SocketFactory {
 
     @Override
     public Socket createSocket(String host, int port) throws IOException, UnknownHostException {
+        mLog.debug("createSocket#1");
         Socket socket = new SocksSocket(proxy, new InetSocketAddress(host,port));
         return socket;
     }
 
     @Override
     public Socket createSocket(String host, int port, InetAddress localHost, int localPort) throws IOException, UnknownHostException {
+        mLog.debug("createSocket#2");
         Socket socket = new SocksSocket(proxy, new InetSocketAddress(host,port));
         return socket;
     }
 
     @Override
     public Socket createSocket(InetAddress host, int port) throws IOException {
+        mLog.debug("createSocket#3");
         Socket socket = new SocksSocket(proxy, new InetSocketAddress(host,port));
         return socket;
     }
 
     @Override
     public Socket createSocket(InetAddress address, int port, InetAddress localAddress, int localPort) throws IOException {
+        mLog.debug("createSocket#4");
         Socket socket = new SocksSocket(proxy, new InetSocketAddress(address,port));
         return socket;
     }
 
     @Override
     public Socket createSocket() throws IOException {
-        mLog.debug("createSocket");
+        mLog.debug("createSocket#5");
         Socket socket = new SocksSocket(proxy, new InetSocketAddress(host,80));
         return socket;
     }
