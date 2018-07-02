@@ -11,8 +11,17 @@ import java.net.InetSocketAddress;
 import java.net.PasswordAuthentication;
 import java.net.Proxy;
 import java.net.Socket;
+import java.net.URL;
+import java.util.concurrent.TimeUnit;
 
 
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Headers;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
 import sockslib.client.Socks5;
 import sockslib.client.SocksProxy;
 import sockslib.client.SocksSocket;
@@ -30,28 +39,36 @@ public class Socks5ConnectivityChecker {
     private static final String password = "seven";
 
 
-    public void run(String url){
-        int length = 0;
-        byte[] buffer = new byte[2048];
-        InputStream inputStream = null;
-        OutputStream outputStream = null;
-        Socket socket = null;
+    public void run(String url) throws Exception{
+        URL netUrl = new URL(url);
 
-        try {
-            SocksProxy proxy = new Socks5(
-                    new InetSocketAddress(proxyHost, proxyPort), user, password);
-            InetSocketAddress address = new InetSocketAddress("seven-china.com", 80);
-            socket = new SocksSocket(proxy, address);
-            inputStream = socket.getInputStream();
-            outputStream = socket.getOutputStream();
-            while ((length = inputStream.read(buffer)) > 0) {
-                Log.d(TAG, new String(buffer, 0, length));
+        OkHttpClient client = new OkHttpClient.Builder()
+                .socketFactory(new ProxySocketFactory(proxyHost,proxyPort,user,password,netUrl.getHost()))
+                .connectTimeout(5, TimeUnit.SECONDS)
+                .build();
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
             }
-        }catch (Exception e){
-            Log.e(TAG,"get error",e);
-        }finally {
-            close(inputStream, outputStream, socket);
-        }
+
+            @Override public void onResponse(Call call, Response response) throws IOException {
+                try (ResponseBody responseBody = response.body()) {
+                    if (!response.isSuccessful())
+                        throw new IOException("Unexpected code " + response);
+
+                    Headers responseHeaders = response.headers();
+                    for (int i = 0, size = responseHeaders.size(); i < size; i++) {
+                        System.out.println(responseHeaders.name(i) + ": " + responseHeaders.value(i));
+                    }
+
+                    System.out.println(responseBody.string());
+                }
+            }
+        });
     }
 
     public static void check(){
