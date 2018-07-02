@@ -4,14 +4,13 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.net.URI;
 import java.net.UnknownHostException;
 
 import javax.net.SocketFactory;
 
-import socks5lib.client.Socks5;
-import socks5lib.client.SocksProxy;
-import socks5lib.client.SocksSocket;
+import sockslib.client.Socks5;
+import sockslib.client.SocksProxy;
+import sockslib.client.SocksSocket;
 
 
 public class ProxySocketFactory extends SocketFactory {

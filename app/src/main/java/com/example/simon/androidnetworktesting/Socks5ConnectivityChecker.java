@@ -1,16 +1,9 @@
 package com.example.simon.androidnetworktesting;
 
-import android.support.annotation.Nullable;
 import android.util.Log;
 
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.InetSocketAddress;
-import java.net.PasswordAuthentication;
-import java.net.Proxy;
-import java.net.Socket;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
@@ -23,7 +16,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
-import static socks5lib.utils.ResourceUtil.close;
+import static sockslib.utils.ResourceUtil.close;
 
 public class Socks5ConnectivityChecker {
 
