@@ -22,9 +22,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
-import sockslib.client.Socks5;
-import sockslib.client.SocksProxy;
-import sockslib.client.SocksSocket;
 
 import static socks5lib.utils.ResourceUtil.close;
 
