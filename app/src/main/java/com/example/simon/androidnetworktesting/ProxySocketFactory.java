@@ -21,8 +21,13 @@ public class ProxySocketFactory extends SocketFactory {
 
     public ProxySocketFactory(String proxyHost,int proxyPort,String user,String password){
         mLog.debug("ProxySocketFactory");
-        proxy = new Socks5(
-                new InetSocketAddress(proxyHost, proxyPort), user, password);
+        if(user == null){
+            proxy = new Socks5(
+                    new InetSocketAddress(proxyHost, proxyPort));
+        }else{
+            proxy = new Socks5(
+                    new InetSocketAddress(proxyHost, proxyPort), user, password);
+        }
     }
 
     public ProxySocketFactory(String proxyHost,int proxyPort){

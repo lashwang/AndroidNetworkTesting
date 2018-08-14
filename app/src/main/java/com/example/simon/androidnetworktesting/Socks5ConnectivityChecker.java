@@ -31,6 +31,7 @@ public class Socks5ConnectivityChecker {
 
     public void run(String url) throws Exception{
         URL netUrl = new URL(url);
+        Response response;
 
         OkHttpClient client = new OkHttpClient.Builder()
                 .socketFactory(new ProxySocketFactory(proxyHost,proxyPort,user,password))
@@ -40,25 +41,16 @@ public class Socks5ConnectivityChecker {
                 .url(url)
                 .build();
 
-        client.newCall(request).enqueue(new Callback() {
-            @Override public void onFailure(Call call, IOException e) {
-                e.printStackTrace();
+        try{
+            response = client.newCall(request).execute();
+            if (!response.isSuccessful()){
+                throw new IOException("Unexpected code " + response);
             }
+        }catch (Exception e) {
+            Log.d(TAG, "get error:" + e.getMessage(), e);
+        }
 
-            @Override public void onResponse(Call call, Response response) throws IOException {
-                try (ResponseBody responseBody = response.body()) {
-                    if (!response.isSuccessful())
-                        throw new IOException("Unexpected code " + response);
 
-                    Headers responseHeaders = response.headers();
-                    for (int i = 0, size = responseHeaders.size(); i < size; i++) {
-                        System.out.println(responseHeaders.name(i) + ": " + responseHeaders.value(i));
-                    }
-
-                    System.out.println(responseBody.string());
-                }
-            }
-        });
     }
 
     public static void check(){

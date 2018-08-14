@@ -100,8 +100,8 @@ public class Socks5 implements SocksProxy{
 	public Socks5(){
 		acceptableMethods = new ArrayList<>();
 		acceptableMethods.add(new NoAuthencationRequiredMethod());
-		acceptableMethods.add(new GssApiMethod());
-		acceptableMethods.add(new UsernamePasswordMethod());
+		//acceptableMethods.add(new GssApiMethod());
+		//acceptableMethods.add(new UsernamePasswordMethod());
 	}
 
 	/**
@@ -125,6 +125,7 @@ public class Socks5 implements SocksProxy{
 	public Socks5(SocketAddress socketAddress, String username, String password){
 		this(socketAddress);
 		setAuthentication(new UsernamePasswordAuthencation(username, password));
+        acceptableMethods.add(new UsernamePasswordMethod());
 	}
 
 	/**

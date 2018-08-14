@@ -44,7 +44,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //networkRequest();
-                Socks5ConnectivityChecker.check();
+                //Socks5ConnectivityChecker.check();
+                SSLUtils.generateKeyPair();
             }
         });
 
@@ -76,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void networkRequest(){
-        AndroidNetworking.get("https://google.com/")
+        AndroidNetworking.get("https://baidu.com/")
                 .setPriority(Priority.HIGH)
                 .build()
                 .getAsOkHttpResponse(new OkHttpResponseListener() {
